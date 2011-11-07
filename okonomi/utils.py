@@ -36,6 +36,7 @@ def generate_js(paths):
     for path in paths:
         # TODO use actual setting
         full_path = os.path.join(settings.STATIC_PATH, path)
-        combined += '\n\n' # TODO slurp file
+        with open(full_path, 'r') as f:
+            combined += f.read()+'\n/* --- okonomi --- */\n' # TODO slurp file
 
     return combined

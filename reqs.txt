@@ -1,0 +1,37 @@
+Locally hosted media
+--------------------
+
+* ${JS} sigil in HEAD or somewhere
+
+{% jsrequire /formchecking.js %}
+
+* add "/formchecking.js" to set() in context
+
+... (repeat in various templates) ...
+
+* middleware:
+    * generate key from what is in the set()
+    * not cached?
+        * read all the js files, concat, cache
+
+    * insert <script src="/js/cache_key"></script> for ${JS}
+
+* view:
+    * /js/.*
+    * pull from memcache; if not there, generate as above, but this should never happen
+    * serve js as application/javascript
+    * high cache expire
+
+Remote hosted media
+-------------------
+
+* ${JS} sigil in HEAD or somewhere
+
+{% jsrequire https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.js %}
+
+* add url to set() in context
+
+... (repeat in various templates) ...
+
+* middleware:
+    * insert <script src="url"></script> for each remote include

@@ -1,6 +1,8 @@
 okonomi
 -------
 
+DISCLAIMER: this is a WIP.
+
 incredibly simply static javascript file handling.
 
 from any template, as many times as you want:

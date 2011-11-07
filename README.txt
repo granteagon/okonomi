@@ -13,6 +13,11 @@ okonomi will take care of getting just the right <script> includes into the HEAD
 
 There is a written but totally un-tested bulking feature that combines all the locally-hosted javascript files into a single string stored in memcache and serves them via a django view and a single <script> tag.
 
+django settings
+---------------
+OKONOMI_JS_BULKING defaults to False. set to True for the experimental memcache
+bulking feature.
+
 author
 ------
 Nathaniel Smith <nate.smith@coxinc.com>

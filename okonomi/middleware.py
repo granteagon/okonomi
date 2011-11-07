@@ -1,5 +1,7 @@
 import re
 
+from django.core.cache import cache
+
 OKONOMI_JS_PLACEHOLDER = re.compile("\$\{JS\}")
 
 class Okonomi(object):

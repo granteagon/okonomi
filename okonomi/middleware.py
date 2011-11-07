@@ -25,14 +25,20 @@ class Okonomi(object):
         for url in request.okonomi_urls:
             remote_html += (html % url)
 
-        if len(request.okonomi_paths) > 0:
-            cache_key = okonomi.utils.make_cache_key(request.okonomi_paths)
-            combined_path = okonomi.utils.make_combined_path(request.okonomi_paths)
-            local_html = html % ('okonomi/%s' % combined_paths)
-            js = cache.get(cache_key)
-            if js is None:
-                combined = okonomi.utils.generate_js(request.okonomi_paths)
-                cache.set(cache_key, combined)
+        if getattr(settings, 'OKONOMI_JS_BULKING', False):
+            if len(request.okonomi_paths) > 0:
+                cache_key = okonomi.utils.make_cache_key(request.okonomi_paths)
+                combined_path = okonomi.utils.make_combined_path(request.okonomi_paths)
+                local_html = html % ('okonomi/%s' % combined_paths)
+                js = cache.get(cache_key)
+                if js is None:
+                    combined = okonomi.utils.generate_js(request.okonomi_paths)
+                    cache.set(cache_key, combined)
+        else:
+            for path in request.okononomi_paths:
+                # TODO actual setting. need /?
+                url = settings.STATIC_PATH + 'path'
+                local_html += (html % url)
 
         response.content = OKONOMI_JS_PLACEHOLDER.sub(local_html+remote_html, response.content)
 

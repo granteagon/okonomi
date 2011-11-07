@@ -12,8 +12,8 @@ class Okonomi(object):
     """
 
     def process_request(self, request):
-        request.okonomi_paths = []
-        request.okonomi_urls = []
+        request.okonomi_paths = set()
+        request.okonomi_urls = set()
 
     def process_response(self, request, response):
         if not (hasattr(request, 'okonomi_paths') or hasattr(request, 'okonomi_urls')):

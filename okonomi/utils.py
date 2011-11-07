@@ -11,7 +11,7 @@ def make_cache_key(paths):
     if type(paths) == type(''):
         return 'okonomi:%s' % paths
 
-    if type(paths) == type([]):
+    if type(paths) in (type([]), type(set())):
         return 'okonomi:%s' % make_combined_path(paths)
 
 # [str] -> str

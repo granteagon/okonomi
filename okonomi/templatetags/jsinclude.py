@@ -46,8 +46,8 @@ class JSIncludeNode(template.Node):
 
     def render(self, context):
         if self.path:
-            context['okonomi_paths'].append(self.path)
+            context['okonomi_paths'].add(self.path)
         if self.url:
-            context['okonomi_urls'].append(self.url)
+            context['okonomi_urls'].add(self.url)
 
         return '<!-- requires %s -->' % (self.path or self.url)

@@ -17,7 +17,9 @@ There is a written but totally un-tested bulking feature that combines all the l
 
 django settings
 ---------------
-OKONOMI_JS_BULKING defaults to False. set to True for the experimental memcache
+* OKONOMI_STATIC_URL set this to whatever makes sense for your django project.
+* OKONOMI_STATIC_PATH set this to whatever makes sense for your django project.
+* OKONOMI_JS_BULKING defaults to False. set to True for the experimental memcache
 bulking feature.
 
 author

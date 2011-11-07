@@ -1,8 +1,10 @@
 import re
 
 from django.core.cache import cache
+from django.conf import settings
 
 OKONOMI_JS_PLACEHOLDER = re.compile("\$\{JS\}")
+OKONOMI_STATIC_URL = settings.OKONOMI_STATIC_URL
 
 class Okonomi(object):
     """
@@ -36,8 +38,8 @@ class Okonomi(object):
                     cache.set(cache_key, combined)
         else:
             for path in request.okononomi_paths:
-                # TODO actual setting. need /?
-                url = settings.STATIC_PATH + 'path'
+                # TODO lack of / works for medley, but...
+                url = settings.OKONOMI_STATIC_URL + 'path'
                 local_html += (html % url)
 
         response.content = OKONOMI_JS_PLACEHOLDER.sub(local_html+remote_html, response.content)

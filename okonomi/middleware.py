@@ -37,7 +37,7 @@ class Okonomi(object):
                     combined = okonomi.utils.generate_js(request.okonomi_paths)
                     cache.set(cache_key, combined)
         else:
-            for path in request.okononomi_paths:
+            for path in request.okonomi_paths:
                 # TODO lack of / works for medley, but...
                 url = settings.OKONOMI_STATIC_URL + 'path'
                 local_html += (html % url)

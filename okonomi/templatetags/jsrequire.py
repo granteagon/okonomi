@@ -2,15 +2,15 @@ from django import template
 
 register = template.Library()
 
-@register.tag(name="jsinclude")
-def jsinclude(parse, token):
+@register.tag(name="jsrequire")
+def jsrequire(parse, token):
     """
         Syntax::
-            {% jsinclude path_relative_to_STATIC_URL|url %}
+            {% jsrequire path_relative_to_STATIC_URL|url %}
 
         Examples::
-            {% jsinclude /formcheckin.js %}
-            {% jsinclude /jqueryui/accordian.js %}
+            {% jsrequire /formcheckin.js %}
+            {% jsrequire /jqueryui/accordian.js %}
             {% jsinclde https://maps.google.com/api/?key=123 %}
 
     """
@@ -30,7 +30,7 @@ def jsinclude(parse, token):
 
     return JSIncludeNode(path, url)
 
-class JSIncludeNode(template.Node):
+class JSRequireNode(template.Node):
     def __init__(self, path=None, url=None):
         if not (path and url):
             raise template.TemplateSyntaxError('Expected either a relative path or a fully qualified url. Got nothing')

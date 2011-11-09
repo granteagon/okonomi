@@ -21,18 +21,16 @@ def jsrequire(parse, token):
     path_or_url = tokens.pop()
     path = None
     url = None
-    if path_or_url.startswith('/'):
-        path = path_or_url
-    elif path_or_url.startswith('http'):
+    if path_or_url.startswith('http'):
         url = path_or_url
     else:
-        raise template.TemplateSyntaxError('Expected either a relative path (starting with /) or a fully qualified url (starting with http). Got %s' % path_or_url)
+        path = path_or_url
 
-    return JSIncludeNode(path, url)
+    return JSRequireNode(path, url)
 
 class JSRequireNode(template.Node):
     def __init__(self, path=None, url=None):
-        if not (path and url):
+        if not (path or url):
             raise template.TemplateSyntaxError('Expected either a relative path or a fully qualified url. Got nothing')
         if path and url:
             raise template.TemplateSyntaxError('Expected either a relative path or a fully qualified url. Got both')

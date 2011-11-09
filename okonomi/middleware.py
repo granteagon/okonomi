@@ -39,7 +39,7 @@ class Okonomi(object):
         else:
             for path in request.okonomi_paths:
                 # TODO lack of / works for medley, but...
-                url = settings.OKONOMI_STATIC_URL + 'path'
+                url = settings.OKONOMI_STATIC_URL + path
                 local_html += (html % url)
 
         response.content = OKONOMI_JS_PLACEHOLDER.sub(local_html+remote_html, response.content)

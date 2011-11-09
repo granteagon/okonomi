@@ -3,7 +3,7 @@ import re
 from django.core.cache import cache
 from django.conf import settings
 
-OKONOMI_JS_PLACEHOLDER = re.compile("\$\{JS\}")
+OKONOMI_JS_PLACEHOLDER = re.compile("\$\{JSREQUIRE\}")
 OKONOMI_STATIC_URL = settings.OKONOMI_STATIC_URL
 
 class Okonomi(object):

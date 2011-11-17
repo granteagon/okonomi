@@ -43,9 +43,9 @@ class JSRequireNode(template.Node):
             self.url = url
 
     def render(self, context):
-        if self.path:
+        if self.path and 'okonomi_paths' in context:
             context['okonomi_paths'].add(self.path)
-        if self.url:
+        if self.url and 'okonomi_urls' in context:
             context['okonomi_urls'].add(self.url)
 
         return '<!-- requires %s -->' % (self.path or self.url)

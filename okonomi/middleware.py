@@ -20,6 +20,9 @@ class Okonomi(object):
     def process_response(self, request, response):
         if not (hasattr(request, 'okonomi_paths') or hasattr(request, 'okonomi_urls')):
             return response
+        if len(request.okonomi_urls) == 0 and len(request.okonomi_paths) == 0:
+            return response
+
         html = '<script type="text/javascript" src="%s"></script>\n';
 
         remote_html = ''

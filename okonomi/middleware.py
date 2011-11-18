@@ -3,7 +3,7 @@ import re
 from django.core.cache import cache
 from django.conf import settings
 
-OKONOMI_JS_PLACEHOLDER = re.compile("\$\{JSREQUIRE\}")
+OKONOMI_JS_PLACEHOLDER = '${JSREQUIRE}'
 OKONOMI_STATIC_URL = settings.OKONOMI_STATIC_URL
 
 class Okonomi(object):
@@ -23,29 +23,21 @@ class Okonomi(object):
         if len(request.okonomi_urls) == 0 and len(request.okonomi_paths) == 0:
             return response
 
-        html = '<script type="text/javascript" src="%s"></script>\n';
+        html = '<script type="text/javascript" src="%s"></script>\n'
 
         remote_html = ''
         local_html = ''
         for url in request.okonomi_urls:
             remote_html += (html % url)
 
-        if getattr(settings, 'OKONOMI_JS_BULKING', False):
-            if len(request.okonomi_paths) > 0:
-                cache_key = okonomi.utils.make_cache_key(request.okonomi_paths)
-                combined_path = okonomi.utils.make_combined_path(request.okonomi_paths)
-                local_html = html % ('okonomi/%s' % combined_paths)
-                js = cache.get(cache_key)
-                if js is None:
-                    combined = okonomi.utils.generate_js(request.okonomi_paths)
-                    cache.set(cache_key, combined)
-        else:
-            for path in request.okonomi_paths:
-                # TODO lack of / works for medley, but...
-                url = settings.OKONOMI_STATIC_URL + path
-                local_html += (html % url)
+        for path in request.okonomi_paths:
+            # TODO lack of / works for medley, but...
+            url = settings.OKONOMI_STATIC_URL + path
+            local_html += (html % url)
 
-        response.content = OKONOMI_JS_PLACEHOLDER.sub(local_html+remote_html, response.content)
+        # why str()? we were getting UnicodeDecodeErrors
+        combined = str(local_html+remote_html)
+        response.content = response.content.replace(OKONOMI_JS_PLACEHOLDER, combined)
 
         return response
 

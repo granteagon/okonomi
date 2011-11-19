@@ -18,12 +18,14 @@ class Okonomi(object):
         request.okonomi_urls = set()
 
     def process_response(self, request, response):
-        if not (hasattr(request, 'okonomi_paths') or hasattr(request, 'okonomi_urls')):
-            return response
-        if len(request.okonomi_urls) == 0 and len(request.okonomi_paths) == 0:
+        def early_exit(resposne):
+            response.content = response.content.replace(OKONOMI_JS_PLACEHOLDER, '')
             return response
 
-        html = '<script type="text/javascript" src="%s"></script>\n'
+        if not (hasattr(request, 'okonomi_paths') or hasattr(request, 'okonomi_urls')):
+            return early_exit(response)
+        if len(request.okonomi_urls) == 0 and len(request.okonomi_paths) == 0:
+            return early_exit(response)
 
         remote_html = ''
         local_html = ''

@@ -5,7 +5,8 @@ from django.conf import settings
 
 OKONOMI_JS_PLACEHOLDER = '${JSREQUIRE}'
 OKONOMI_STATIC_URL = settings.OKONOMI_STATIC_URL
-OKONOMI_HTML_TEMPLATE = getattr(settings, 'OKONOMI_HTML_TEMPLATE', '<script type="text/javascript" src="%s"></script>\n')
+OKONOMI_HTML_PATH_TEMPLATE = getattr(settings, 'OKONOMI_HTML_PATH_TEMPLATE', '<script type="text/javascript" src="%s"></script>\n')
+OKONOMI_HTML_URL_TEMPLATE = getattr(settings, 'OKONOMI_HTML_URL_TEMPLATE', '<script type="text/javascript" src="%s"></script>\n')
 
 class Okonomi(object):
     """
@@ -31,12 +32,12 @@ class Okonomi(object):
         remote_html = ''
         local_html = ''
         for url in request.okonomi_urls:
-            remote_html += (OKONOMI_HTML_TEMPLATE % url)
+            remote_html += (OKONOMI_HTML_URL_TEMPLATE % url)
 
         for path in request.okonomi_paths:
             # TODO lack of / works for medley, but...
             url = settings.OKONOMI_STATIC_URL + path
-            local_html += (OKONOMI_HTML_TEMPLATE % url)
+            local_html += (OKONOMI_HTML_PATH_TEMPLATE % url)
 
         # why str()? we were getting UnicodeDecodeErrors
         combined = str(local_html+remote_html)

@@ -20,6 +20,8 @@ django settings
 * OKONOMI_STATIC_URL set this to whatever makes sense for your django project.
 * OKONOMI_STATIC_PATH set this to whatever makes sense for your django project.
 * OKONOMI_JS_BULKING defaults to False. set to True for the experimental memcache
+* OKONOMI_HTML_PATH_TEMPLATE defaults to '<script type="text/javascript" src="%s"></script>\n'
+* OKONOMI_HTML_URL_TEMPLATE defaults to '<script type="text/javascript" src="%s"></script>\n'
 bulking feature.
 
 author
